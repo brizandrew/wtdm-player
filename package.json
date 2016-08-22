@@ -8,9 +8,11 @@
     "lint": "jshint --reporter=node_modules/jshint-stylish --exclude=js/bb-code-styles.css build/js/*; exit 0",
     "prebuild": "npm run lint; npm run autoprefixer; npm run updateHTML",
     "build": "browserify build/js/main.js | uglifyjs > dist/wtdm-player.min.js",
+    "postbuild": "npm run updateGit",
     "watch": "nodemon -w build -x 'npm run build'",
     "autoprefixer": "postcss -u autoprefixer -o dist/style.css build/css/*",
-    "updateHTML": "cp build/index.html dist/index.html"
+    "updateHTML": "cp build/index.html dist/index.html",
+    "updateGit": "git add *; git commit -m \"v1.0.0 update\"; git push"
   },
   "author": "Andrew Briz",
   "license": "ISC",
