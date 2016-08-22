@@ -1,0 +1,101 @@
+html, body, #player-cover img, #controls{
+	width: 100%;
+}
+
+html, body {
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+#page-frame{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.page{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	-webkit-transition: right 0.2s linear;
+	transition: right 0.2s linear;
+}
+
+#home-page, #episode-content{
+	overflow-y: scroll;
+}
+
+#episode-content{
+	height: 100%;
+	margin: 0px 0 75px 0;
+}
+
+#episode-page{
+	right: 0;
+	background-color: green;
+}
+
+#episode-nav{
+	width: 100%;
+	height: 50px;
+	background-color: blue;
+}
+
+
+#home-page::-webkit-scrollbar, #episode-content::-webkit-scrollbar{
+	background-color: #ececec;
+	width: 7px;
+}
+
+#home-page::-webkit-scrollbar-track, #episode-content::-webkit-scrollbar-track{
+	margin: 3px 0px 77px 0px;
+	padding: 0 3px 0 3px;
+}
+
+#home-page::-webkit-scrollbar-thumb, #episode-content::-webkit-scrollbar-thumb{
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 20px;
+}
+
+.episode-data{
+	height: 150px;
+	border-bottom: 1px solid #f1ecec;
+	padding: 5px; 
+}
+
+.episode-data h4{
+	margin-bottom: 5px;
+}
+
+.episode-data img{
+	height: 100%;
+	float: left;
+	padding-right: 20px;
+}
+
+#controls{
+	background-color: red;
+	position: absolute;
+	height: 75px;
+	bottom: 0;
+}
+/*Compensate for controls height*/
+#episode-list{
+	margin-bottom: 75px;
+}
+
+#controls img{
+	height: 100%;
+}
+
+#duration-bar{
+	height: 10px;
+	background-color: #7c7ca9;
+}
+
+#progress-bar{
+	width: 75%;
+	height: 100%;
+	background-color: #4444ab;
+}

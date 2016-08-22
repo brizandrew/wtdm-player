@@ -1,0 +1,31 @@
+{
+  "name": "wtdm-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify build/js/main.js | uglifyjs > dist/wtdm-player.min.js",
+    "lint": "jshint --reporter=node_modules/jshint-stylish --exclude=js/bb-code-styles.css build/js/*; exit 0",
+    "prebuild": "npm run lint; npm run autoprefixer; npm run updateHTML",
+    "build": "browserify build/js/main.js | uglifyjs > dist/wtdm-player.min.js",
+    "watch": "nodemon -w build -x 'npm run build'",
+    "autoprefixer": "postcss -u autoprefixer -o dist/style.css build/css/*",
+    "updateHTML": "cp build/index.html dist/index.html"
+  },
+  "author": "Andrew Briz",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "browserify": "^13.1.0",
+    "csslint": "^1.0.2",
+    "imagemin-cli": "^3.0.0",
+    "jshint": "^2.9.3",
+    "jshint-stylish": "^2.2.1",
+    "nodemon": "^1.10.0",
+    "postcss-cli": "^2.5.2",
+    "uglify-js": "^2.7.3"
+  },
+  "dependencies": {
+    "normalize.css": "^4.2.0"
+  }
+}
