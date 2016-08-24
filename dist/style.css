@@ -1,4 +1,4 @@
-html, body, #player-cover img, #controls{
+html, body, #player-cover, #controls, .page{
 	width: 100%;
 }
 
@@ -9,90 +9,201 @@ html, body {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+}
+
+svg{
+	fill: rgb(241, 136, 0);
+}
+
+.copy{
+	width: 700px;
+	margin: 0 auto;
+	font-size: 18px;
+}
+
+#page-frame{
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+	position: relative;
 }
 
 .page{
-	height: 100%;
-	width: 100%;
 	position: absolute;
-	-webkit-transition: right 0.2s linear;
-	transition: right 0.2s linear;
+	height: 100%;
+	-webkit-transition: -webkit-transform 0.2s linear;
+	transition: -webkit-transform 0.2s linear;
+	transition: transform 0.2s linear;
+	transition: transform 0.2s linear, -webkit-transform 0.2s linear;
 }
 
 #home-page, #episode-content{
 	overflow-y: scroll;
 }
 
-#episode-content{
+#player-cover{
 	height: 100%;
-	margin: 0px 0 75px 0;
+	background-size: cover;
+	background-position: center;
 }
 
-#episode-page{
-	right: 0;
-	background-color: green;
-}
-
-#episode-nav{
-	width: 100%;
-	height: 50px;
-	background-color: blue;
-}
-
-
-#home-page::-webkit-scrollbar, #episode-content::-webkit-scrollbar{
-	background-color: #ececec;
-	width: 7px;
-}
-
-#home-page::-webkit-scrollbar-track, #episode-content::-webkit-scrollbar-track{
-	margin: 3px 0px 77px 0px;
-	padding: 0 3px 0 3px;
-}
-
-#home-page::-webkit-scrollbar-thumb, #episode-content::-webkit-scrollbar-thumb{
-	background-color: rgba(0,0,0,0.2);
-	border-radius: 20px;
+.episode-data:first-child{
+	border-top: 1px solid #f1ecec;	
 }
 
 .episode-data{
 	height: 150px;
 	border-bottom: 1px solid #f1ecec;
-	padding: 5px; 
-}
-
-.episode-data h4{
-	margin-bottom: 5px;
 }
 
 .episode-data img{
 	height: 100%;
 	float: left;
-	padding-right: 20px;
+	margin-right: 15px;
+}
+
+.episode-data h4{
+	font-size: 24px;
+	margin: 0px;
+	padding: 5px 5px 5px 5px;
+}
+
+.episode-data p{
+	margin: 0px;
+	padding: 0px 5px 5px 5px;
+}
+
+#episode-content{
+	height: 100%;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+}
+
+#episode-content-cover{
+	width: 100%;
+	height: 400px;
+	background-size: cover;
+	background-position: center;
+}
+
+#episode-page{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+#episode-nav{
+	width: 100%;
+	height: 50px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	box-shadow: 0px 3px 7px -2px rgba(0,0,0,0.75);
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.episode-nav-button{
+	height: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.episode-nav-button svg{
+	height: 100%;
+}
+
+#episode-nav-button-back{
+	float: left;
+}
+
+#episode-nav-title{
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+	text-align: center;
+	margin: 14.236px 0px;
+}
+
+#episode-nav-button-share{
+	float: right;
 }
 
 #controls{
-	background-color: red;
-	position: absolute;
 	height: 75px;
-	bottom: 0;
-}
-/*Compensate for controls height*/
-#episode-list{
-	margin-bottom: 75px;
-}
-
-#controls img{
-	height: 100%;
 }
 
 #duration-bar{
 	height: 10px;
-	background-color: #7c7ca9;
+	background-color: rgba(241, 136, 0, 0.3);
 }
 
 #progress-bar{
 	width: 75%;
 	height: 100%;
-	background-color: #4444ab;
+	background-color: rgb(241, 136, 0);
+}
+
+#controls-infoBox{
+	height: 65px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+#controls-infoBox img{
+	float: left;
+	height: 100%;
+}
+
+#controls-buttons{
+	float: left;
+	padding: 15px;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.controls-button{
+	width: 33%;
+	height: 100%;
+	float: left;
+}
+
+.controls-button svg{
+	height: 100%;
+	width: 100%;
+}
+
+/*Tablet Size*/
+@media (max-width: 767px) { 
+	.copy{
+    	width: 88%; 
+	}
+}
+
+/*Mobile Size*/
+@media (max-width: 510px){
+	#episode-list{
+		width: 100%;
+	}
+	.episode-data{
+		height: auto;
+		padding: 0px 10px;
+	}
+	.episode-data img{
+		display: none;
+	}
 }
