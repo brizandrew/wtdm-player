@@ -36,7 +36,7 @@ svg{
 }
 
 #player-cover{
-	height: 100%;
+	height: 90%;
 	background-size: cover;
 	background-position: center;
 }
@@ -74,7 +74,7 @@ svg{
 
 #episode-content-cover{
 	width: 100%;
-	height: 400px;
+	height: 90%;
 	background-size: cover;
 	background-position: center;
 }
