@@ -11,7 +11,16 @@ html, body {
 }
 
 svg{
-	fill: rgb(241, 136, 0);
+	fill: rgb(30, 115, 190);
+}
+
+#loading{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
 }
 
 .copy{
@@ -48,6 +57,7 @@ svg{
 .episode-data{
 	height: 150px;
 	border-bottom: 1px solid #f1ecec;
+	cursor: pointer;
 }
 
 .episode-data img{
@@ -74,9 +84,38 @@ svg{
 
 #episode-content-cover{
 	width: 100%;
-	height: 90%;
+	height: 100%;
 	background-size: cover;
 	background-position: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#episode-content-play{
+	background-color: rgb(30, 115, 190);
+    padding: 12px 23px;
+    border-radius: 9px;
+    opacity: 0.8;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#episode-content-play svg{
+    display: inline;
+    width: 32px;
+    fill: white;
+}
+
+#episode-content-play p{
+	display: inline;
+    font-size: 23px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    padding-left: 12px;
 }
 
 #episode-page{
@@ -96,6 +135,7 @@ svg{
 .episode-nav-button{
 	height: 100%;
 	padding: 10px;
+	cursor: pointer;
 	box-sizing: border-box;
 }
 
@@ -118,18 +158,32 @@ svg{
 }
 
 #controls{
+	height: 0px;
+	transition: height 0.2s linear;
+}
+
+#controls.active{
 	height: 75px;
 }
 
 #duration-bar{
 	height: 10px;
-	background-color: rgba(241, 136, 0, 0.3);
+	background-color: rgba(30, 115, 190, 0.3);
+	transition: height 0.2s linear;
+	cursor: pointer;
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+}
+
+#duration-bar:active{
+	cursor: -webkit-grabbing;
+	cursor: -moz-grabbing;
 }
 
 #progress-bar{
-	width: 75%;
+	width: 0%;
 	height: 100%;
-	background-color: rgb(241, 136, 0);
+	background-color: rgb(30, 115, 190);
 }
 
 #controls-infoBox{
@@ -144,9 +198,11 @@ svg{
 
 #controls-buttons{
 	float: left;
+	cursor: pointer;
 	padding: 15px;
     position: relative;
     height: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
     flex: 1;
 }
@@ -161,6 +217,137 @@ svg{
 	height: 100%;
 	width: 100%;
 }
+
+#controls-timecode{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-left: 20px;
+}
+
+#controls-timecode p{
+	margin: 0;
+}
+
+/* Modals */
+.modalWrapper{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 10% 30% 40% 30%;
+	background-color: rgba(0,0,0,0.5);
+	box-sizing: border-box;
+}
+
+.modal{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	background-color: #ececec;
+	min-width: 225px;
+	min-height: 300px;
+	box-sizing: border-box;
+}
+
+.modal h2{
+	margin: 0;
+	text-align: center;
+}
+
+.modal textarea{
+	flex-grow: 4;
+}
+
+.modal input, .modal textarea{
+	border: 1px solid #c1c1c1;
+	padding: 2px;
+}
+
+.modalNav{
+	border-bottom: solid 1px #a6a6a6;
+	margin: 10px 0px;
+    padding-bottom: 6px;
+}
+
+.modalNav h4{
+	display: inline;
+	cursor: pointer;
+	margin-right: 30px;
+	padding-bottom: 4px;
+}
+
+.modalNav h4.active{
+	border-bottom: 3px solid rgb(30, 115, 190);
+}
+
+.modalContent{
+	flex-grow: 4;
+	display: flex;
+	flex-direction: column;
+}
+
+.modalTab{
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.modalFooter{
+	display: flex;
+	flex-direction: row-reverse;
+	border-top: solid 1px #a6a6a6;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.modalFooter button{
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.modalTooltip{
+	position: absolute;
+    top: 56px;
+    right: 37px;
+    display: inline-block;
+    padding: .2em .4em;
+    background-color: white;
+    box-shadow: 2px 2px 4px 1px rgba(0,0,0,.7); 
+	box-sizing: border-box; 
+	-webkit-tap-highlight-color: transparent;
+}
+.modalTooltip:before, .modalTooltip:after{
+    border-left: .4em solid transparent;
+    border-right: .4em solid transparent;
+    border-top: .4em solid #fff;
+    bottom: -.3em;
+    content: "";
+    left: 50%;
+    margin-left: -.4em;
+    position: absolute;
+}
+.modalTooltip:before{
+	border-top-color: rgba(0,0,0,.4);
+	margin-left: -.2em;
+    bottom: -.4em;
+}
+
+@media (max-width: 768px) {
+.modalWrapper {
+  padding: 0px; } }
+
+@media (max-height: 400px) {
+.modalWrapper {
+  padding: 0px; } }
+
+/* -- End Modal -- */
+
+
 
 /*Tablet Size*/
 @media (max-width: 767px) { 
@@ -180,5 +367,18 @@ svg{
 	}
 	.episode-data img{
 		display: none;
+	}
+	#controls.active{
+		height: 100px;
+	}
+	#duration-bar{
+		height: 25px;
+	}
+	#controls-infoBox{
+		height: 75px;
+	}
+	.controls-button{
+		height: 80%;
+		padding-top: 1%;
 	}
 }

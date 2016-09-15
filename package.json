@@ -8,7 +8,8 @@
     "lint": "jshint --reporter=node_modules/jshint-stylish --exclude=js/bb-code-styles.css build/js/*; exit 0",
     "prebuild": "npm run lint; npm run autoprefixer; npm run updateHTML",
     "build": "browserify build/js/main.js | uglifyjs > dist/wtdm-player.min.js",
-    "watch": "nodemon -e js,css,html -w build -x 'npm run build'",
+    "build-dev": "npm run prebuild; browserify build/js/main.js -o dist/wtdm-player.min.js",
+    "watch": "nodemon -e js,css,html -w build -x 'npm run build-dev'",
     "autoprefixer": "postcss -u autoprefixer -o dist/style.css build/css/*",
     "updateHTML": "cp build/index.html dist/index.html",
     "updateGit": "git add *; git commit -m \"v1.0.0 update\"; git push"
@@ -27,6 +28,7 @@
     "uglify-js": "^2.7.3"
   },
   "dependencies": {
+    "d3": "^4.2.2",
     "normalize.css": "^4.2.0"
   }
 }
