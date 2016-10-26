@@ -1,6 +1,6 @@
 var wtdmPlayer = {
 	ac: require('./audioControls.js'),
-
+	rv: require('./responsiveVideo.js'),
 	mod: require('./modal.js'),
 
 	init: function(){
@@ -14,8 +14,6 @@ var wtdmPlayer = {
 		// loading JSON database
 		this.loadDB();
 		window.addEventListener('JSON_load', function(){
-			console.log(self.episodes);
-
 			// Add an episode entry for every episode
 			var episode;
 			for(episode in self.episodes){
@@ -50,15 +48,19 @@ var wtdmPlayer = {
 			appendTo: this.episodePage
 		});
 
+		// initializing responsive video
+		this.rv.init();
+
 		// handling pop states
 		window.addEventListener('popstate', function(){
 			self.handleURL();
 		});
 
 		// initializing navigation buttons
+		document.getElementById('home-nav-button-about').addEventListener('click',function(){self.toggleAbout();});
 		document.getElementById('episode-nav-button-back').addEventListener('click', function(){
+			history.pushState(null, null, 'index.html');
 			self.goHome();
-			history.pushState(null, 'WTDM Player', 'index.html');
 		});
 		document.getElementById('episode-nav-button-share').addEventListener('click', function(){
 			var currentTime = Math.floor(self.ac.audio.currentTime);
@@ -73,22 +75,33 @@ var wtdmPlayer = {
 
 	loadDB: function(){
 		var self = this;
-		var req = new XMLHttpRequest();
-		req.open("GET", 'wtdm-db.json', true);
-		req.addEventListener("load", function() {
-			// load database
-			var db = JSON.parse(req.responseText);
 
-			// make database searchable by id
-			for (var i = 0; i < db.episodes.length; i++) {
-				var id = db.episodes[i].id;
-				self.episodes[id] = db.episodes[i];
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+				if (xmlhttp.status == 200) {
+					var db = JSON.parse(xmlhttp.responseText);
+					
+					// make database searchable by id
+					for (var i = 0; i < db.length; i++) {
+						var id = db[i].pageId;
+						self.episodes[id] = db[i];
+						self.episodes[id].id = id;
+					}
+					
+					// dispatch finish event
+					window.dispatchEvent(new Event('JSON_load'));
+				}
+				else if (xmlhttp.status == 400) {
+					throw new Error('load.php: GET request returned error 400.');
+				}
+				else {
+					throw new Error('load.php: GET request returned error.');
+				}
 			}
-
-			// dispatch finish event
-			window.dispatchEvent(new Event('JSON_load'));
-		});
-		req.send(null);
+		};
+		xmlhttp.open("GET", 'load.php', true);
+		xmlhttp.send();
 	},
 
 	newElement: function(config){
@@ -168,8 +181,8 @@ var wtdmPlayer = {
 		});
 
 		ele.addEventListener('click', function(){
+			history.pushState(null, null, '?id=' + config.id);
 			self.goToEpisode(config.id);
-			history.pushState(null, config.name, '?id=' + config.id);
 		});
 
 		return ele; 
@@ -180,13 +193,13 @@ var wtdmPlayer = {
 		this.episodePage.removeChild(this.episodeContent);
 		var config = this.episodes[id];
 
-		document.getElementById('episode-nav-title').innerHTML = 'WTDM / ' + config.name;
+		document.getElementById('episode-nav-title').innerHTML = config.name;
 		
 		this.episodeContent = this.newElement({
 			name: 'div',
 			id: 'episode-content',
 			appendTo: this.episodePage
-		});
+		}); 
 
 		var episodeContentCover = this.newElement({
 			name: 'div',
@@ -205,15 +218,6 @@ var wtdmPlayer = {
 				appendTo: episodeContentCover
 			});
 
-			// var episodeContentPlaySVG = this.newElement({
-			// 	name: 'svg',
-			// 	attrs: {
-			// 		viewBox: '0 0 15 16'
-			// 	},
-			// 	innerHTML: '<path d="M0,0 L7,3.74 7,12.28 0,16 M7,3.74 L15,8 15,8 7,12.28"></path>',
-			// 	appendTo: episodeContentPlay
-			// });
-
 			episodeContentPlay.addEventListener('click',function(){
 				episodeContentPlay.style.display = 'none';
 				self.ac.load(self.episodes[id]);
@@ -222,35 +226,66 @@ var wtdmPlayer = {
 			});
 		}
 
+		var episodeContentMore = this.newElement({
+			name: 'div',
+			id: 'episode-content-more',
+			innerHTML: '<svg version="1.1" viewBox="0 0 24 11"><polyline stroke="rgb(30, 115, 190)" stroke-width="3" fill="transparent" points="1 9, 12 3, 23 9"></polyline></svg><p>READ</p>',
+			appendTo: episodeContentCover
+		});
+
+		var content = window.atob(config.content);
 		var episodeContentText = this.newElement({
 			name: 'div',
 			className: 'copy',
 			id: 'episode-content-text',
-			innerHTML: config.content,
+			innerHTML: content,
 			appendTo: this.episodeContent
 		});
 
+		// hack to fix weird bug where clientWidth isn't ready immediately
+		setTimeout(function(){self.rv.resize();},1);
+
 		document.getElementById('episode-page').style.transform = 'translate(0px,0px)';
 		document.getElementById('home-page').style.transform = 'translate(-103%,0px)';
+		document.getElementsByTagName('title')[0].innerHTML = 'WTDM | ' + config.name;
 	},
 
 	goHome: function(){
 		document.getElementById('episode-page').style.transform = 'translate(103%,0px)';
 		document.getElementById('home-page').style.transform = 'translate(0,0px)';
+		document.getElementsByTagName('title')[0].innerHTML = 'WTDM';
 	},
 
 	handleURL: function(){
 		var url = this.utils.parseURL(window.location.href);
-
 		var pageId = url.query.id;
+		var second = url.query.t;
+		
+		if(second !== undefined){
+			this.ac.load(this.episodes[pageId]);
+			this.nowPlayingId = pageId;
+			this.ac.audio.currentTime = second;
+		}
+
 		if(pageId !== undefined)
 			this.goToEpisode(pageId);
 		else
 			this.goHome();
+	},
 
-		var second = url.query.t;
-		if(second !== undefined){
-			this.ac.audio.currentTime = second;
+	toggleAbout: function(){
+		var button = document.getElementById('home-nav-button-about');
+		var about = document.getElementById('home-about-container');
+		var infoIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 281.89 281.89"><path class="cls-1" d="M263.42,162.61a140.95,140.95,0,1,0,140.94,141A141,141,0,0,0,263.42,162.61Zm-2.68,68.25c9.26,0,14.81,6.37,14.81,14.81,0,8.22-5.76,14.6-14.81,14.6-9.25,0-14.6-6.38-14.6-14.6C246.14,237.23,251.69,230.86,260.74,230.86ZM291,373.18q0,3.07-3.09,3.08h-49c-2,0-3.08-.82-3.08-3.08V363.1q0-3.09,3.08-3.09h13V291.32H240.79c-2,0-3.08-.82-3.08-3.08v-10.7q0-3.07,3.08-3.08h31.06c2.26,0,3.08,1,3.08,3.08V360h13c2.06,0,3.09.83,3.09,3.09v10.08Z" transform="translate(-122.47 -162.61)"/></svg>';
+		var closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 281.89 281.89"><path class="cls-1" d="M256.61,120.09A140.95,140.95,0,1,0,397.55,261,141,141,0,0,0,256.61,120.09ZM288,320.73l-24.51-37.1-6.52-10-31.36,47.1h-24.5l43.61-62-40.35-57.33h25.29l18.32,28q5.18,8,8.32,13.38,4.93-7.43,9.1-13.16l20.13-28.21h24.16l-41.25,56.2,44.4,63.18H288Z" transform="translate(-115.66 -120.09)"/></svg>';
+
+		if(about.style.display == 'none'){
+			about.style.display = 'block';
+			button.innerHTML = closeIcon;
+		}
+		else{
+			about.style.display = 'none';
+			button.innerHTML = infoIcon;
 		}
 	},
 
@@ -286,24 +321,3 @@ var wtdmPlayer = {
 };
 
 wtdmPlayer.init();
-
-
-
-// function getPageSize() {
-// 	return {
-// 		height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-// 		width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-// 	};
-// }
-
-// function setHeight(){
-// 	var pages = document.getElementsByClassName('page');
-// 	pageSize = getPageSize();
-// 	for (var i = 0; i < pages.length; i++) {
-// 		pages[i].style.width = pageSize.width + 'px';
-// 		pages[i].style.height = (pageSize.height - 75) + 'px';
-// 	}
-// }
-
-// window.onresize = setHeight;
-// document.addEventListener("DOMContentLoaded", setHeight);

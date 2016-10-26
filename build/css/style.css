@@ -1,4 +1,4 @@
-html, body, #player-cover, #controls, .page{
+html, body, #home-cover, #controls, .page{
 	width: 100%;
 }
 
@@ -8,11 +8,60 @@ html, body {
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	font-family: Georgia, serif;
+	background-color: gray;
+}
+
+body div{
+	background-color: white;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Crete Round', serif;
+}
+
+h1{
+	font-size: 40px;
+}
+
+p{
+	font-family: Georgia, serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    word-wrap: break-word;
+    line-height: 22px;
+}
+
+/* Blue Color */
+h1,
+a,
+#episode-content-more p{
+	color: rgb(30, 115, 190);
 }
 
 svg{
 	fill: rgb(30, 115, 190);
 }
+
+#episode-content-play,
+#progress-bar{
+	background-color: rgb(30, 115, 190);
+}
+
+.modalNav h4.active{
+	border-bottom: 3px solid rgb(30, 115, 190);
+}
+
+#duration-bar{
+	background-color: rgba(30, 115, 190, 0.3);
+}
+
+#episode-content-more svg polyline{
+	stroke: rgb(30, 115, 190);
+}
+
+/* Page Styles */
 
 #loading{
 	width: 100%;
@@ -24,13 +73,14 @@ svg{
 }
 
 .copy{
-	width: 700px;
+	width: 620px;
 	margin: 0 auto;
 	font-size: 18px;
 }
 
 #page-frame{
-	flex: 1;
+	flex-grow: 1;
+	height: 20px;
 	position: relative;
 }
 
@@ -40,14 +90,21 @@ svg{
 	transition: transform 0.2s linear;
 }
 
-#home-page, #episode-content{
+#home-page,
+#home-content,
+#episode-content{
 	overflow-y: scroll;
 }
 
-#player-cover{
+#home-nav-title{
+	text-align: left;
+}
+
+#home-cover{
 	height: 90%;
 	background-size: cover;
-	background-position: center;
+	background-position: center 0px;
+	background-image: url('img/wtdm-cover.jpg');
 }
 
 .episode-data:first-child{
@@ -77,9 +134,44 @@ svg{
 	padding: 0px 5px 5px 5px;
 }
 
+#home-about-container{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+
+#home-about-wrapper{
+	position: fixed;
+	top: 88px;
+	left: 20%;
+	right: 20%;
+	bottom: 3%;
+	padding: 0 10px;
+	overflow-y: scroll;
+}
+
+#home-about-content{
+	max-width: 620px;
+	margin: 0 auto;
+	padding: 10px 15px;
+	box-sizing: border-box;
+}
+
+#home-about-content h3{
+	text-align: center;
+	font-size: 24px;
+}
+
+#home-content,
 #episode-content{
 	height: 100%;
-	flex: 1;
+	flex-grow: 1;
+}
+
+#home-content{
+	margin-top: 35px;
 }
 
 #episode-content-cover{
@@ -87,13 +179,13 @@ svg{
 	height: 100%;
 	background-size: cover;
 	background-position: center;
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
 #episode-content-play{
-	background-color: rgb(30, 115, 190);
     padding: 12px 23px;
     border-radius: 9px;
     opacity: 0.8;
@@ -111,6 +203,7 @@ svg{
 
 #episode-content-play p{
 	display: inline;
+	font-family: 'Crete Round', serif;
     font-size: 23px;
     font-weight: bold;
     color: white;
@@ -118,28 +211,67 @@ svg{
     padding-left: 12px;
 }
 
-#episode-page{
+#episode-content-more{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	cursor: default;
+	background-color: transparent;
+	margin-bottom: 10px;
+	z-index: 2;
+}
+
+#episode-content-more svg{
+	width: 24px;
+	height: 11px;
+	display: block;
+	margin: 0 auto;
+}
+
+#episode-content-more svg polyline{
+	stroke-width: 3px;
+	fill: transparent;
+}
+
+#episode-content-more p{
+	font-family: 'Crete Round', serif;
+	text-align: center;
+	margin: 0;
+}
+
+#episode-content-text{
+	margin-bottom: 30px;
+}
+
+#episode-page,
+#home-page{
 	display: flex;
     flex-direction: column;
 }
 
-#episode-nav{
+#episode-nav,
+#home-nav{
 	width: 100%;
-	height: 50px;
 	padding: 0 10px;
 	box-sizing: border-box;
 	box-shadow: 0px 3px 7px -2px rgba(0,0,0,0.75);
+	background-color: white;
 	display: flex;
+	align-items: center;
+    justify-content: center;
+	position: absolute;
+	z-index: 10;
 }
 
-.episode-nav-button{
-	height: 100%;
+.nav-button{
+	height: 50px;
 	padding: 10px;
 	cursor: pointer;
 	box-sizing: border-box;
 }
 
-.episode-nav-button svg{
+.nav-button svg{
 	height: 100%;
 }
 
@@ -147,13 +279,18 @@ svg{
 	float: left;
 }
 
+#home-nav-title,
 #episode-nav-title{
-	flex: 1;
-	text-align: center;
+	flex-grow: 1;
 	margin: 14.236px 0px;
 }
 
-#episode-nav-button-share{
+#episode-nav-title{
+	text-align: center;
+}
+
+#episode-nav-button-share,
+#home-nav-button-about{
 	float: right;
 }
 
@@ -168,7 +305,6 @@ svg{
 
 #duration-bar{
 	height: 10px;
-	background-color: rgba(30, 115, 190, 0.3);
 	transition: height 0.2s linear;
 	cursor: pointer;
 	cursor: -webkit-grab;
@@ -183,7 +319,6 @@ svg{
 #progress-bar{
 	width: 0%;
 	height: 100%;
-	background-color: rgb(30, 115, 190);
 }
 
 #controls-infoBox{
@@ -198,13 +333,12 @@ svg{
 
 #controls-buttons{
 	float: left;
-	cursor: pointer;
 	padding: 15px;
     position: relative;
     height: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
-    flex: 1;
+    flex-grow: 1;
 }
 
 .controls-button{
@@ -215,11 +349,14 @@ svg{
 
 .controls-button svg{
 	height: 100%;
-	width: 100%;
+	display: block;
+	cursor: pointer;
+	margin: 0 auto;
 }
 
 #controls-timecode{
 	display: flex;
+	min-width: 100px;
 	align-items: center;
 	justify-content: center;
 	padding-left: 20px;
@@ -228,6 +365,26 @@ svg{
 #controls-timecode p{
 	margin: 0;
 }
+
+
+/* Episode Content Text */
+.floatLeft, 
+.floatRight{
+	width: 50%;
+	text-indent: 0;
+}
+
+.floatRight{
+	float: right;
+	margin-left: 10px;
+}
+
+.floatLeft{
+	float: left;
+	margin-right: 10px;
+}
+/* -- End Episode Content Text -- */
+
 
 /* Modals */
 .modalWrapper{
@@ -241,6 +398,10 @@ svg{
 	box-sizing: border-box;
 }
 
+.modalWrapper div{
+	background-color: #ececec;
+}
+
 .modal{
 	position: relative;
 	width: 100%;
@@ -248,7 +409,6 @@ svg{
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
-	background-color: #ececec;
 	min-width: 225px;
 	min-height: 300px;
 	box-sizing: border-box;
@@ -279,10 +439,6 @@ svg{
 	cursor: pointer;
 	margin-right: 30px;
 	padding-bottom: 4px;
-}
-
-.modalNav h4.active{
-	border-bottom: 3px solid rgb(30, 115, 190);
 }
 
 .modalContent{
@@ -351,13 +507,56 @@ svg{
 
 /*Tablet Size*/
 @media (max-width: 767px) { 
+	h1{
+		font-size: 35px;
+	}
+
 	.copy{
     	width: 88%; 
+	}
+
+	.floatLeft,
+	.floatRight{
+		width: 100%;
+		margin: 9px 0px;
+		float: none;
+	}
+
+	#home-content{
+		margin-top: 30px;
+	}
+
+	#home-about-wrapper{
+		top: 83px;
+		left: 10%;
+		right: 10%;
 	}
 }
 
 /*Mobile Size*/
 @media (max-width: 510px){
+	h1{
+		font-size: 20px;
+	}
+
+	.nav-button{
+		height: 37px;
+	}
+
+	#home-content{
+		margin-top: 25px;
+	}
+
+	#home-about-wrapper{
+		position: fixed;
+		top: 52px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: 0;
+		padding: 10px;
+	}
+
 	#episode-list{
 		width: 100%;
 	}

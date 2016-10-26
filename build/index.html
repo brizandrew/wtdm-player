@@ -4,10 +4,27 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>WTDM Player</title>
+	<title>WTDM</title>
+	<link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="normalize.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
+	<link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/imgfavicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#fd0a0c">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	</head>
 <body>
 	<div id="loading">
 		<p>
@@ -17,19 +34,42 @@
 	</div>
 	<div id="page-frame" style="display:none">
 		<div class="page" id="home-page">
-			<div id="player-cover" style="background-image: url('https://bytesizemoments.com/wp-content/uploads/2014/04/placeholder3.png')"></div>
-			<div class="copy" id="episode-list">
+			<div id="home-nav">
+				<h1 id="home-nav-title">We're The Damn Millennials</h1>
+				<div id="home-nav-button-about" class="nav-button">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 281.89 281.89">
+						<path class="cls-1" d="M263.42,162.61a140.95,140.95,0,1,0,140.94,141A141,141,0,0,0,263.42,162.61Zm-2.68,68.25c9.26,0,14.81,6.37,14.81,14.81,0,8.22-5.76,14.6-14.81,14.6-9.25,0-14.6-6.38-14.6-14.6C246.14,237.23,251.69,230.86,260.74,230.86ZM291,373.18q0,3.07-3.09,3.08h-49c-2,0-3.08-.82-3.08-3.08V363.1q0-3.09,3.08-3.09h13V291.32H240.79c-2,0-3.08-.82-3.08-3.08v-10.7q0-3.07,3.08-3.08h31.06c2.26,0,3.08,1,3.08,3.08V360h13c2.06,0,3.09.83,3.09,3.09v10.08Z" transform="translate(-122.47 -162.61)"/>
+					</svg>
+				</div>
+			</div>
+			<div id="home-content">
+				<div id="home-cover">
+				</div>
+				<div class="copy" id="episode-list">
+				</div>
+			</div>
+			<div id="home-about-container" style="display:none;">
+				<div id="home-about-wrapper">
+					<div id="home-about-content">
+						<h3>About</h3>
+						<p> Welcome to our new podcast "We’re The Damn Millennials." This podcast began as a passion project organized by our News Manager at WUFT, Ryan Vasquez all the way back in the Fall of 2015. The idea? To create a show that discusses the issues surrounding the 2016 election and not focus on the horse race journalism that currently controls the majority of political news. To take it a step further, in this election it will be the first time in history that Millennials will be able to overtake the Baby Boomer Generation in the voting booth.  Alas, "We’re the Damn Millennials" was born, a podcast that wanted to tackle why this generation is so important in the future of politics.</p>
+						<h4>Aaron Abell</h4>
+						<p>Aaron began his journey in film and journalism way back in his freshman year of high school. After listening to just one lecture in his TV production class, he knew what he wanted to do for the rest of his life. To pursue this passion Aaron studies telecommunication with an emphasis on news producing at the University of Florida. There he works as a news producer with WUFT News and as a reporter for WUFT FM. With these news outlets he’s been able to report on stories that range from protests, to the 2016 presidential race. One day he hopes to use his experience in story telling to change the way people view the world around them.</p>
+						<h4>Rebekkah Mar</h4>
+						<p>Rebekkah Mar (Becky) is a Senior at the University of Florida College of Journalism. She is pursuing a degree in Telecommunications with a specialization in news producing and a concentration in English. Rebekkah is currently WUFT News Senior Line Newscast Producer. She is going on her third year as a television and radio producer and reporter. Rebekkah is the co-host and producer of "WTDM."</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="page" id="episode-page">
 			<div id="episode-nav">
-				<div id="episode-nav-button-back" class="episode-nav-button">
+				<div id="episode-nav-button-back" class="nav-button">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.55 69.16">
 						<polygon points="42.57 0 48.49 14.14 31.25 28.01 23.03 34.62 31.23 41.18 48.55 55.03 42.69 69.16 0 34.59 42.57 0"/>
 					</svg>
 				</div>
 				<h3 id="episode-nav-title"></h3>
-				<div id="episode-nav-button-share" class="episode-nav-button">
+				<div id="episode-nav-button-share" class="nav-button">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.01 140.17">
 						<polygon points="28.31 48.55 14.18 42.69 48.75 0 83.34 42.57 69.2 48.49 55.33 31.25 55.33 116.09 42.16 116.09 42.16 31.23 28.31 48.55"/>
 						<path d="M231.67,324.08V398.6c0,3.48-2.29,6.32-5.08,6.32H139.75c-2.8,0-5.09-2.84-5.09-6.32V324.07c0-3.5,2.3-6.32,5.12-6.32h19.1v13H145.25v61h75.83v-61H207.44v-13h19.15C229.38,317.75,231.67,320.6,231.67,324.08Z" transform="translate(-134.66 -264.75)"/>
